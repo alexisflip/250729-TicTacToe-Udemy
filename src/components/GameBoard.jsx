@@ -6,7 +6,7 @@ const initialGameBoard = [
 
 export default function GameBoard ({onSelectSquare, turns}) {
 
-    let gameBoard = initialGameBoard;
+    let gameBoard = [...initialGameBoard.map(array => [...array])];
 
     for (const turn of turns) {
 
@@ -16,22 +16,27 @@ export default function GameBoard ({onSelectSquare, turns}) {
         gameBoard [row][col] = player;
 
     }
-    console.log(turns);
-    console.log(gameBoard);
+    //console.log(turns);
+    //console.log(gameBoard);
 
-    return(
-        <ol id="game-board">
-            {gameBoard.map((row, rowIndex) => (
-                <li key={rowIndex}>
-                    <ol>
-                        {row.map((column, columnIndex) => (
-                            <li key={columnIndex}>
-                                <button onClick={() => onSelectSquare(rowIndex,columnIndex)}>{column}</button>
-                            </li>
-                    ))}
-                    </ol>
+    return (
+      <ol id='game-board'>
+        {gameBoard.map((row, rowIndex) => (
+          <li key={rowIndex}>
+            <ol>
+              {row.map((columnSymbol, columnIndex) => (
+                <li key={columnIndex}>
+                  <button
+                    onClick={() => onSelectSquare(rowIndex, columnIndex)}
+                    disabled={columnSymbol != null}
+                  >
+                    {columnSymbol}
+                  </button>
                 </li>
-            ))}
-        </ol>
-    )
+              ))}
+            </ol>
+          </li>
+        ))}
+      </ol>
+    );
 }
